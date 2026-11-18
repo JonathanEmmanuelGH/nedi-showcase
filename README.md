@@ -67,10 +67,11 @@ Only features that have been released to production are listed.
 
 ### Multi-tenancy
 - Multi-tenant branding and deployment profiles (consignment, retail, inventory-only).
-- Single-tenant deployments per customer, built from release tags.
 - Home page with a module selector.
 
 ## Architecture
+
+Designed for single-tenant deployments per customer, built from release tags.
 
 ```mermaid
 flowchart LR
@@ -79,8 +80,8 @@ flowchart LR
     DB[("PostgreSQL<br/>append-only audit tables<br/>and triggers")]
     Redis[("Redis<br/>rate limiting")]
     Agent["Windows print agent<br/>label printer"]
-    Tags["Release tags"]
-    Tenant["Single-tenant deployment<br/>per customer"]
+    Tags["Release tags<br/>(deployment design)"]
+    Tenant["Single-tenant deployment<br/>per customer (deployment design)"]
 
     Browser -->|HTTPS, JWT| API
     API --> DB
@@ -152,7 +153,7 @@ A seat model keeps the work organized. Two orchestration sessions plan and chall
 
 The setup has 17 Claude subagent definitions (each pinned to a model), 17 slash commands and 17 generated Codex role contracts. Guard scripts refuse unsafe actions. Two secret-leak incidents motivated them: an agent sourced an environment file and echoed a token, and a subagent read an environment file with a file tool and printed credentials into a transcript. Both led to hard rules and enforcing hooks.
 
-The reusable part of this workflow is published separately: [agentic-delivery-kit](../agentic-delivery-kit).
+The reusable part of this workflow is published separately: [agentic-delivery-kit](https://github.com/JonathanEmmanuelGH/agentic-delivery-kit).
 
 ## Not built
 
